@@ -5,8 +5,12 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+path = "src/main.rs"
+name = "bootstrap"
+
 [dependencies]
 async-std = { version = "1.12.0", features = ["attributes"] }
 dotenv = "0.15.0"
 serde = "1.0.144"
-surf = "2.3.2"
+surf = { version = "2.3.2", default-features = false, features = ["h1-client-rustls"] }
