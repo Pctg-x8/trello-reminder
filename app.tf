@@ -1,5 +1,6 @@
 locals {
     function_name = "Trello-Reminder"
+    function_code = "${path.module}/target/lambda/trello-reminder/bootstrap.zip"
 }
 
 resource "aws_lambda_function" "function" {
@@ -7,8 +8,8 @@ resource "aws_lambda_function" "function" {
     description = "Monthly Trello Reminder"
     role = aws_iam_role.execution_role.arn
 
-    filename = "${path.module}/package.zip"
-    source_code_hash = filebase64sha256("${path.module}/package.zip")
+    filename = local.function_code
+    source_code_hash = filebase64sha256(local.function_code)
     handler = "hello.handler"
     runtime = "provided.al2"
 

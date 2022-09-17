@@ -8,8 +8,6 @@ mod trello;
 
 #[tokio::main]
 async fn main() -> Result<(), lambda_runtime::Error> {
-    dotenv::dotenv().expect("Failed to read dotenv file");
-
     lambda_runtime::run(service_fn(run)).await
 }
 
