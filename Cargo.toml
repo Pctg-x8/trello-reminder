@@ -10,7 +10,11 @@ path = "src/main.rs"
 name = "bootstrap"
 
 [dependencies]
-async-std = { version = "1.12.0", features = ["attributes"] }
 dotenv = "0.15.0"
+lambda_runtime = "0.6.1"
+reqwest = { version = "0.11.11", default-features = false, features = ["rustls", "json"] }
+rusoto_core = { version = "0.48.0", default-features = false, features = ["rustls"] }
+rusoto_secretsmanager = { version = "0.48.0", default-features = false, features = ["rustls"] }
 serde = "1.0.144"
-surf = { version = "2.3.2", default-features = false, features = ["h1-client-rustls"] }
+serde_json = "1.0.85"
+tokio = { version = "1.21.1", features = ["rt", "rt-multi-thread", "macros"] }

@@ -1,14 +1,13 @@
-
 #[derive(serde::Serialize)]
 pub struct AuthenticationPair<'s> {
     pub key: &'s str,
-    pub token: &'s str
+    pub token: &'s str,
 }
 
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BoardCardLabel {
-    pub name: String
+    pub name: String,
 }
 
 #[derive(serde::Deserialize)]
@@ -27,16 +26,28 @@ pub struct BoardCard {
 #[serde(rename_all = "camelCase")]
 pub struct BoardList {
     pub id: String,
-    pub name: String
+    pub name: String,
 }
 
 pub struct Board<'s>(pub &'s str);
 impl Board<'_> {
-    pub async fn cards(&self, auth: &AuthenticationPair<'_>) -> surf::Result<Vec<BoardCard>> {
-        surf::get(format!("https://api.trello.com/1/boards/{}/cards", self.0)).query(auth)?.recv_json().await
+    pub async fn cards(&self, auth: &AuthenticationPair<'_>) -> reqwest::Result<Vec<BoardCard>> {
+        reqwest::Client::new()
+            .get(format!("https://api.trello.com/1/boards/{}/cards", self.0))
+            .query(auth)
+            .send()
+            .await?
+            .json()
+            .await
     }
 
-    pub async fn lists(&self, auth: &AuthenticationPair<'_>) -> surf::Result<Vec<BoardList>> {
-        surf::get(format!("https://api.trello.com/1/boards/{}/lists", self.0)).query(auth)?.recv_json().await
+    pub async fn lists(&self, auth: &AuthenticationPair<'_>) -> reqwest::Result<Vec<BoardList>> {
+        reqwest::Client::new()
+            .get(format!("https://api.trello.com/1/boards/{}/lists", self.0))
+            .query(auth)
+            .send()
+            .await?
+            .json()
+            .await
     }
 }
