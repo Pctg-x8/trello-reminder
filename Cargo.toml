@@ -13,3 +13,5 @@ rusoto_secretsmanager = { version = "0.48.0", default-features = false, features
 serde = "1.0.144"
 serde_json = "1.0.85"
 tokio = { version = "1.21.1", features = ["rt", "rt-multi-thread", "macros"] }
+
+async-slack-web-api = { git = "https://github.com/Pctg-x8/async-slack-web-api", features = ["rustls"] }
