@@ -33,7 +33,10 @@ in  GHA.Workflow::{
           , steps =
             [ actions/checkout.stepv3 actions/checkout.Params::{=}
             , actions-rs/toolchain.step
-                actions-rs/toolchain.Params::{ toolchain = Some "stable" }
+                actions-rs/toolchain.Params::{
+                , toolchain = Some "stable"
+                , profile = Some "minimal"
+                }
             , GHA.Step::{
               , name = "Setup cargo-lambda"
               , run = Some "pip3 install cargo-lambda"
