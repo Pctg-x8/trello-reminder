@@ -60,7 +60,7 @@ in  GHA.Workflow::{
             , GHA.Step::{
               , name = "Deploy Infrastructure"
               , run = Some
-                  "terraform init -input=false && terraform apply -input=false"
+                  "terraform init -input=false && terraform apply -auto-approve"
               }
             ]
           }
