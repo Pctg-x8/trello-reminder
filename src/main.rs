@@ -75,7 +75,8 @@ async fn run(_: LambdaEvent<serde_json::Value>) -> Result<(), lambda_runtime::Er
                 ..Default::default()
             },
         )
-        .await?;
+        .await?
+        .into_result()?;
 
     Ok(())
 }
