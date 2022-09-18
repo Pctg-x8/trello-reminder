@@ -3,6 +3,14 @@ locals {
     function_code = "${path.module}/target/lambda/trello-reminder/bootstrap.zip"
 }
 
+terraform {
+    backend "s3" {
+        bucket = "ct2infra-terraform-states"
+        key = "trello-reminder.tfstate"
+        region = "ap-northeast-1"
+    }
+}
+
 resource "aws_lambda_function" "function" {
     function_name = local.function_name
     description = "Monthly Trello Reminder"
