@@ -14,7 +14,7 @@ dependencies = [
 [[package]]
 name = "async-slack-web-api"
 version = "0.1.0"
-source = "git+https://github.com/Pctg-x8/async-slack-web-api#7e56ce7d553bcca3344a1c41eca299c927a97e51"
+source = "git+https://github.com/Pctg-x8/async-slack-web-api#83b2fbf3bb77dcd963857017b19b9077431d1ca2"
 dependencies = [
  "reqwest",
  "serde",

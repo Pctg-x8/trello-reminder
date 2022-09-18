@@ -27,6 +27,7 @@ pub struct BoardCard {
 pub struct BoardList {
     pub id: String,
     pub name: String,
+    pub pos: f32,
 }
 
 pub struct Board<'s>(pub &'s str);
