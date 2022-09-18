@@ -19,7 +19,7 @@ pub struct List {
     pub cards: Vec<trello::BoardCard>,
 }
 
-async fn run(_: LambdaEvent<()>) -> Result<(), lambda_runtime::Error> {
+async fn run(_: LambdaEvent<serde_json::Value>) -> Result<(), lambda_runtime::Error> {
     let secrets = Secrets::load().await?;
     let auth = trello::AuthenticationPair {
         key: &secrets.trello_api_key,
