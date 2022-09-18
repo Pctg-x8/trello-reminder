@@ -2,6 +2,7 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 
 use lambda_runtime::{service_fn, LambdaEvent};
+use rand::{seq::SliceRandom, Rng};
 use secrets::Secrets;
 
 mod secrets;
@@ -65,22 +66,34 @@ async fn run(_: LambdaEvent<serde_json::Value>) -> Result<(), lambda_runtime::Er
         fields: Vec::new(),
     });
     let mut text = String::from("\n\n");
+    let mut rng = rand::thread_rng();
     blocks.extend(order.into_iter().map(|c| {
         let mut text = format!("*{}*\n", c.name);
-        for cc in &c.cards {
-            text.extend(
-                format!(
-                    "<{}|{}>({})\n",
-                    cc.name,
-                    cc.url,
-                    cc.labels
-                        .iter()
-                        .map(|l| &l.name as &str)
-                        .collect::<Vec<_>>()
-                        .join(" / ")
-                )
-                .chars(),
-            );
+        if c.cards.is_empty() {
+            let base = ["ないよ", "ないみたい", "ないっぽいよ", "なさそうだね"]
+                .choose(&mut rng)
+                .unwrap();
+            let add_exc: bool = rng.gen();
+            text.push_str(base);
+            if add_exc {
+                text.push('！');
+            }
+        } else {
+            for cc in &c.cards {
+                text.extend(
+                    format!(
+                        "<{}|{}>({})\n",
+                        cc.url,
+                        cc.name,
+                        cc.labels
+                            .iter()
+                            .map(|l| &l.name as &str)
+                            .collect::<Vec<_>>()
+                            .join(" / ")
+                    )
+                    .chars(),
+                );
+            }
         }
 
         async_slack_web_api::Block::Section {
